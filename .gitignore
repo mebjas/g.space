@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+db.json
+agents/ingestion/.adk/session.db
+/agents/ingestion/.adk

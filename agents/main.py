@@ -17,15 +17,13 @@ from google.genai import types
 load_dotenv()
 
 _APP_NAME = "ingestion_agent"
-_USER_ID = "minhazav@gmail.com"
+_USER_ID = "6506806306"  #"minhazav@gmail.com"
 _SESSION_ID = "default"
 app = FastAPI()
 session_service = InMemorySessionService()
 session = asyncio.run(session_service.create_session(
     app_name=_APP_NAME, user_id=_USER_ID, session_id=_SESSION_ID
 ))
-
-# What's the weather in Sunnyvale?
 
 @app.post("/chat")
 async def _chat_with_agent(message: str = Body(...), session_id: str = _SESSION_ID):
@@ -34,7 +32,8 @@ async def _chat_with_agent(message: str = Body(...), session_id: str = _SESSION_
                 session_service=session_service)
     # run_async yields events, we collect the text from them
     response_text = ""
-    content = types.Content(role="user", parts=[types.Part(text=message)])
+    message_final = f"user_id={_USER_ID}: {message}"
+    content = types.Content(role="user", parts=[types.Part(text=message_final)])
     async for event in runner.run_async(
             user_id=_USER_ID, session_id=_SESSION_ID, new_message=content
         ):
